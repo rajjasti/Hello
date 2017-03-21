@@ -16,10 +16,15 @@ import java.io.PrintWriter;
  */
 public class HelloRestService extends javax.servlet.http.HttpServlet {
 
+    private static final String JSON_CONTENT_TYPE = "application/json";
+    private static final String QUERY_PARAM_NAME = "name";
+    private static final String ERROR_METHOD_NOT_ALLOWED = "Method Not Allowed";
+    private static final String ERROR_INVALID_REQUEST = "Invalid Request. Query Param: name expected";
+
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException{
-        setErrorResponse(resp, 405, "Method Not Allowed");
+        setErrorResponse(resp, 405, ERROR_METHOD_NOT_ALLOWED);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -29,16 +34,17 @@ public class HelloRestService extends javax.servlet.http.HttpServlet {
         try {
 
             PrintWriter pw = resp.getWriter();
-            resp.setContentType("application/json");
 
-            String name = req.getParameter("name");
+
+            String name = req.getParameter(QUERY_PARAM_NAME);
 
            if(StringUtils.isNotBlank(name)){
                HelloResponse helloResponse = new HelloResponse(name);
+               resp.setContentType(JSON_CONTENT_TYPE);
                gson.toJson(helloResponse, pw);
 
            }else{
-               setErrorResponse(resp, 400, "Invalid Request. Query Param: name expected");
+               setErrorResponse(resp, 400, ERROR_INVALID_REQUEST);
            }
 
         } catch (Throwable t) {
@@ -48,7 +54,7 @@ public class HelloRestService extends javax.servlet.http.HttpServlet {
 
     private void setErrorResponse(HttpServletResponse resp, int errorCode, String message) throws IOException {
         Gson gson = new Gson();
-        resp.setContentType("application/json");
+        resp.setContentType(JSON_CONTENT_TYPE);
         resp.setStatus(errorCode);
         PrintWriter pw = resp.getWriter();
         ErrorResponse errorResponse = new ErrorResponse(message);
