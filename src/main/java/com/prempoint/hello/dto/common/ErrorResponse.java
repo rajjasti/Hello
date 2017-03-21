@@ -1,4 +1,4 @@
-package dto.common;
+package com.prempoint.hello.dto.common;
 
 /**
  * Created by rajjasti on 3/20/17.

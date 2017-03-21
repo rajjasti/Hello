@@ -1,6 +1,8 @@
+package com.prempoint.hello.rest;
+
 import com.google.gson.Gson;
-import dto.common.ErrorResponse;
-import dto.hello.HelloResponse;
+import com.prempoint.hello.dto.common.ErrorResponse;
+import com.prempoint.hello.dto.hello.HelloResponse;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.ServletException;

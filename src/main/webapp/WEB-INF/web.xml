@@ -10,7 +10,7 @@
 
     <servlet>
         <servlet-name>hello</servlet-name>
-        <servlet-class>HelloRestService</servlet-class>
+        <servlet-class>com.prempoint.hello.rest.HelloRestService</servlet-class>
     </servlet>
 
     <servlet-mapping>
