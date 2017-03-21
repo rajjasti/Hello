@@ -3,6 +3,8 @@ package com.prempoint.hello.rest;
 import com.google.gson.Gson;
 import com.prempoint.hello.dto.common.ErrorResponse;
 import com.prempoint.hello.dto.hello.HelloResponse;
+import com.prempoint.hello.dto.uservisit.UserVisit;
+import com.prempoint.hello.service.DataStoreService;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.ServletException;
@@ -37,8 +39,13 @@ public class HelloRestService extends javax.servlet.http.HttpServlet {
 
 
             String name = req.getParameter(QUERY_PARAM_NAME);
+            String userIp = req.getRemoteAddr();
 
            if(StringUtils.isNotBlank(name)){
+               UserVisit userVisit = new UserVisit(name, userIp);
+               DataStoreService dataStoreService = new DataStoreService();
+               dataStoreService.storeUserVisit(userVisit);
+
                HelloResponse helloResponse = new HelloResponse(name);
                resp.setContentType(JSON_CONTENT_TYPE);
                gson.toJson(helloResponse, pw);
